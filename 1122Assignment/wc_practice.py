@@ -11,8 +11,8 @@ def map_phase(x):
 
 if __name__ == "__main__":
 	if len(sys.argv) < 4:
-      print >> sys.stderr, "Usage: wordcount <master> <inputfile> <outputfile>"
-       exit(-1)
+        print >> sys.stderr, "Usage: wordcount <master> <inputfile> <outputfile>"
+        exit(-1)
 	sc = SparkContext(sys.argv[1], "python_wordcount_sorted in bigdataprogrammiing")
 	lines = sc.textFile(sys.argv[2],2)
 	print(lines.getNumPartitions()) # print the number of partitions
