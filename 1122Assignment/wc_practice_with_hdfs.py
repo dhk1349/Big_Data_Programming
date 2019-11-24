@@ -14,14 +14,16 @@ if __name__ == "__main__":
 		print >> sys.stderr, "Usage: wordcount <master> <inputfile> <outputfile>"
 		exit(-1)
     
+    sc = SparkContext(sys.argv[1], "python_wordcount_sorted in bigdataprogrammiing")
+	lines = sc.textFile(sys.argv[2],2)
+
     	sparkSession = SparkSession.builder.appName("test").getOrCreate()
     	#data=open(sys.argv[2])
-    	df=sparkSession.createDataFrame(sys.argv[2])
+    	df=sparkSession.createDataFrame(lines)
     	df.write.csv("hdfs://cluster/user/hdfs/test/example.csv")
     	df_load = sparkSession.read.csv('hdfs://cluster/user/hdfs/test/example.csv')
-	#sc = SparkContext(sys.argv[1], "python_wordcount_sorted in bigdataprogrammiing")
-	lines = sc.textFile(df_load,2)
-	print(lines.getNumPartitions()) # print the number of partitions
+	lines=sc.textFile(df_load)
+    print(lines.getNumPartitions()) # print the number of partitions
    	words=lines.map(lambda x: x.lower())
    	words=words.filter(lambda x: x!='tokyo')
     	words=words.filter(lambda x: x!='neighborhood')
