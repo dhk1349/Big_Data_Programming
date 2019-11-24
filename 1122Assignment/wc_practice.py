@@ -21,4 +21,5 @@ if __name__ == "__main__":
     words=words.filter(lambda x: x!='neighborhood')
     words=words.map(lambda x: (x, 1))
     result=words.reduceByKey(lambda x,y :x+y)
+    result=result.sortBy(lambda x: x[0])
 	result.saveAsTextFile('resultfile')
